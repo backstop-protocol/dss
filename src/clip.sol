@@ -158,7 +158,7 @@ contract Clipper {
     }
 
     // --- Administration ---
-    function file(bytes32 what, uint256 data) external auth lock {
+    function file(bytes32 what, uint256 data) public virtual auth lock {
         if      (what == "buf")         buf = data;
         else if (what == "tail")       tail = data;           // Time elapsed before auction reset
         else if (what == "cusp")       cusp = data;           // Percentage drop before auction reset
@@ -231,7 +231,7 @@ contract Clipper {
         uint256 lot,  // Collateral             [wad]
         address usr,  // Address that will receive any leftover collateral
         address kpr   // Address that will receive incentives
-    ) external auth lock isStopped(1) returns (uint256 id) {
+    ) public auth lock virtual isStopped(1) returns (uint256 id) {
         // Input validation
         require(tab  >          0, "Clipper/zero-tab");
         require(lot  >          0, "Clipper/zero-lot");
